@@ -1,0 +1,47 @@
+description: ${DESC}
+tasks:
+  - name: prediction
+    spec:
+      image: ${IMAGE_NAME}
+      resultPath: /output
+      args:
+        - python
+        - scripts/run_experiment.py
+        - --model_type
+        - ${MODEL_TYPE}
+        - --model_name_or_path
+        - ${MODEL_NAME_OR_PATH}
+        - --task_name
+        - ${TASK_NAME}
+        - --do_predict
+        - --do_lower_case
+        - --data_dir
+        - ${DATA_DIR}
+        - --max_seq_length
+        - ${MAX_SEQ_LENGTH}
+        - --per_gpu_eval_batch_size
+        - ${EVAL_BATCH_SIZE}
+        - --output_dir
+        - ${OUTPUT_DIR}
+        - --data_cache_dir
+        - /output/cache/
+      env:
+        MODEL_TYPE: ${MODEL_TYPE}
+        MODEL_NAME_OR_PATH: ${MODEL_NAME_OR_PATH}
+        TASK_NAME: ${TASK_NAME}
+        DATA_DIR: ${DATA_DIR}
+        MAX_SEQ_LENGTH: ${MAX_SEQ_LENGTH}
+        EVAL_BATCH_SIZE: ${EVAL_BATCH_SIZE}
+        TRAIN_BATCH_SIZE: ${TRAIN_BATCH_SIZE}
+        LEARNING_RATE: ${LEARNING_RATE}
+        NUM_EPOCHS: ${NUM_EPOCHS}
+        SEED: ${SEED}
+      datasetMounts:
+        - datasetId: ${WINOGRANDE_DATASET}
+          containerPath: ${MOUNT_POINT}
+        - datasetId: ${MODEL_DATASET}
+          containerPath: ${MODEL_MOUNT_POINT}
+      requirements:
+        gpuCount: ${GPU_COUNT}
+        gpuType: v100
+        preemptible: true

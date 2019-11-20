@@ -1,0 +1,7 @@
+.dockerignore
+datasets/
+.git/
+.gitignore
+models/
+.idea/
+download_winogrande.sh

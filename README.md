@@ -28,8 +28,7 @@ Please note that labels are not included in `test.jsonl`.
 
 ### Training (fine-tuning)
 
-1. If you are familiar with [beaker](https://beaker.org/), run your experiments  by `sh ./train_winogrande_on_bkr.sh`.
-1. or run `./scripts/run_experiment.py` directly (see `sample_training.sh`).
+1. You can train your model by `./scripts/run_experiment.py` (see `sample_training.sh`).
 
         e.g., 
         export PYTHONPATH=$PYTHONPATH:$(pwd)
@@ -55,12 +54,13 @@ Please note that labels are not included in `test.jsonl`.
         --warmup_pct 0.1 \
         --evaluate_during_training
 
+1. If you have an access to [beaker](https://beaker.org/), you can run your experiments by `sh ./train_winogrande_on_bkr.sh`.
+
 1. Results will be stored under `./output/models/`. 
 
 ### Prediction (on the test set)
 
-1. If you are familiar with [beaker](https://beaker.org/), run your experiments  by `sh ./predict_winogrande_on_bkr.sh`.
-1. or run `./scripts/run_experiment.py` directly (see `sample_prediction.sh`).
+1. You can make predictions by `./scripts/run_experiment.py` directly (see `sample_prediction.sh`).
 
         e.g., 
         export PYTHONPATH=$PYTHONPATH:$(pwd)
@@ -76,6 +76,8 @@ Please note that labels are not included in `test.jsonl`.
         --per_gpu_eval_batch_size 4 \
         --output_dir ./output/models/ \
         --data_cache_dir ./output/cache/ \
+
+1. If you have an access to [beaker](https://beaker.org/), you can run your experiments  by `sh ./predict_winogrande_on_bkr.sh`.
 
 1. Result is stored in `./output/models/predictions_test.lst`
 
@@ -101,7 +103,7 @@ If you use this dataset, please cite the following paper:
 
 ## License 
 
-Winogrande is licensed under the Apache License 2.0.
+Winogrande (codebase) is licensed under the Apache License 2.0. The dataset is licensed under CC-BY.
 
 
 ## Questions?

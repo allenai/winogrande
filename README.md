@@ -1,6 +1,6 @@
 # WinoGrande 
 
-Version 1.1 (Dec 2nd, 2019)
+Version 1.1 
 
 - - - 
 

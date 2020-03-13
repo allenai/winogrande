@@ -216,8 +216,9 @@ def evaluate(args, model, tokenizer, processor, prefix="", eval_split=None):
     assert eval_split is not None
 
     results = {}
-    if os.path.exists("/output/metrics.json"):
-        with open("/output/metrics.json", "r") as f:
+
+    if os.path.exists(os.path.join(args.output_dir, "metrics.json")):
+        with open(os.path.join(args.output_dir, "metrics.json"), "r") as f:
             existing_results = json.loads(f.read())
         f.close()
         results.update(existing_results)
@@ -291,8 +292,8 @@ def evaluate(args, model, tokenizer, processor, prefix="", eval_split=None):
             for pred in preds:
                 writer.write("{}\n".format(processor.get_labels()[pred]))
 
-        if os.path.exists("/output/"):
-            with open("/output/metrics.json", "w") as f:
+        if os.path.exists(args.output_dir):
+            with open(os.path.join(args.output_dir, "metrics.json"), "w") as f:
                 f.write(json.dumps(results))
             f.close()
 

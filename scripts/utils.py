@@ -192,6 +192,36 @@ class WinograndeProcessor(DataProcessor):
         return examples
 
 
+class SuperGlueWscProcessor(DataProcessor):
+    """Processor for the SuperGLUE-WSC """
+
+    def get_train_examples(self, data_dir):
+        return self._create_examples(
+            self._read_jsonl(os.path.join(data_dir, "train.jsonl")))
+
+    def get_dev_examples(self, data_dir):
+        return self._create_examples(
+            self._read_jsonl(os.path.join(data_dir, "dev.jsonl")))
+
+    def get_test_examples(self, data_dir):
+        return self._create_examples(
+            self._read_jsonl(os.path.join(data_dir, "test.jsonl")))
+
+    def get_labels(self):
+        return ["0", "1"]
+
+    def _create_examples(self, records):
+        """Creates examples for the training and dev sets."""
+        examples = []
+        for (i, record) in enumerate(records):
+            guid = record['idx']
+            text_a = record["sentence1"]
+            text_b = record["sentence2"]
+            label = record["label"]
+            examples.append(
+                InputExample(guid=guid, text_a=text_a, text_b=text_b, label=label))
+        return examples
+
 
 def convert_examples_to_features(examples,
                                  label_list,
@@ -462,17 +492,22 @@ def compute_metrics(task_name, preds, labels):
     assert len(preds) == len(labels)
     if task_name == "winogrande":
         return {"acc": simple_accuracy(preds, labels)}
+    elif task_name == "superglue-wsc":
+        return {"acc": simple_accuracy(preds, labels)}
     else:
         raise KeyError(task_name)
 
 processors = {
     "winogrande": WinograndeProcessor,
+    "superglue-wsc": SuperGlueWscProcessor,
 }
 
 output_modes = {
     "winogrande": "multiple_choice",
+    "superglue-wsc": "classification",
 }
 
 GLUE_TASKS_NUM_LABELS = {
     "winogrande": 2,
+    "superglue-wsc": 2,
 }
